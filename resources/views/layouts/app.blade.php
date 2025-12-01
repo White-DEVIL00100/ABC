@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @if (app()->isLocale('ar')) dir="rtl" @else dir="ltr" @endif>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,6 +15,17 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    @if (app()->isLocale('ar'))
+        <!-- Arabic specific fixes & stylesheet (public assets) -->
+        <link rel="stylesheet" href="{{ asset('assets/css/ar/style.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/css/ar/rtl-fixes.css') }}" />
+        <script src="{{ asset('assets/js/script-ar.js') }}"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
+        <style>body { font-family: 'Tajawal', sans-serif; }</style>
+    @endif
 </head>
 <body>
     <div id="app">
@@ -65,6 +76,14 @@
                                         @csrf
                                     </form>
                                 </div>
+                            </li>
+                            {{-- Language Switcher --}}
+                            <li class="nav-item">
+                                @if (app()->isLocale('en'))
+                                    <a class="nav-link" href="{{ route('change_locale', 'ar') }}">عربي</a>
+                                @else
+                                    <a class="nav-link" href="{{ route('change_locale', 'en') }}">English</a>
+                                @endif
                             </li>
                         @endguest
                     </ul>

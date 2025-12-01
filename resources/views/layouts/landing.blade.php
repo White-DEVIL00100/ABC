@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html @if (app()->isLocale('ar')) dir="rtl" @else dir="ltr" @endif>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @if (app()->isLocale('ar')) dir="rtl" @else dir="ltr" @endif>
 
 <head>
     <meta charset="UTF-8" />
